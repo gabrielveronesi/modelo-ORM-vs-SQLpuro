@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ModeloORMxSQL.Core.Data;
+using ModeloORMxSQL.Core.Repositories;
+using ModeloORMxSQL.Core.Services;
 
 namespace ModeloORMxSQL.Api
 {
@@ -23,9 +20,17 @@ namespace ModeloORMxSQL.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Configurando o banco de dados
+            services.AddDbContext<DataContext>(
+            context => context.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")
+            ));
+
+            //Configurando injeção de dependencia
+            services.AddTransient<ORMRepository, ORMRepository>();
+            services.AddTransient<ORMService, ORMService>();
+            
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -34,7 +39,6 @@ namespace ModeloORMxSQL.Api
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
