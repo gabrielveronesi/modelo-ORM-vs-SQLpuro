@@ -17,15 +17,9 @@ namespace ModeloORMxSQL.Core.Repositories
         }
         public async Task<List<Cliente>> ListarClientesCadastrados()
         {
-            IQueryable<Cliente> query = _context.Clientes;
-            query = query.AsNoTracking()
-                         .OrderBy(a => a.Id)
-                         .IgnoreAutoIncludes<Cliente>();
-            
             var clientes = await _context.Clientes.ToListAsync();
-
+            
             return clientes;
-            //return await query.ToListAsync();
         }
     }
 }

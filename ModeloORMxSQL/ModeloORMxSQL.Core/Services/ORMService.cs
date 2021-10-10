@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ModeloORMxSQL.Core.Models;
 using ModeloORMxSQL.Core.Repositories;
 
 namespace ModeloORMxSQL.Core.Services
@@ -15,9 +16,11 @@ namespace ModeloORMxSQL.Core.Services
             _ormRepository = ormRepository;
         }
 
-        public async Task ListarClientes()
+        public async Task<List<Cliente>> ListarClientes()
         {
-            await _ormRepository.ListarClientesCadastrados();
+            var clientes = await _ormRepository.ListarClientesCadastrados();
+
+            return clientes;
         }
     }
 }

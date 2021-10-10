@@ -13,14 +13,10 @@ namespace ModeloORMxSQL.Api.Controllers
     [Route("orm/clientes")]
     public class ORMController : MainController
     {
-        //TIRAR O REPOSITORIO DA CONTROLLER!
         private readonly ORMService  _ormService;
-        private readonly ORMRepository _ormRepository;
-        public ORMController(ORMService ormService,
-                             ORMRepository ormRepository)
+        public ORMController(ORMService ormService)
         {
             _ormService = ormService;
-            _ormRepository = ormRepository;
         }
 
         /// <summary>
@@ -28,9 +24,9 @@ namespace ModeloORMxSQL.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("listar-clientes")]
-        public ActionResult<List<Cliente>> ListarClientes()
+        public async Task<ActionResult<List<Cliente>>> ListarClientesORM()
         {
-            var listarClientes = _ormService.ListarClientes();
+            var listarClientes = await _ormService.ListarClientes();
             
             if (listarClientes == null)
             {
@@ -38,17 +34,6 @@ namespace ModeloORMxSQL.Api.Controllers
             }
 
             return Resposta(true, new { listarClientes });
-        }
-
-        /// <summary>
-        /// Listar todos os estabelecimentos de um cliente
-        /// </summary>
-        [HttpGet]
-        [Route("list-user")]
-        public async Task<ActionResult<List<Cliente>>> ListarClientesTeste()
-        {
-            var establishments = await _ormRepository.ListarClientesCadastrados();
-            return establishments;
         }
     }
 }
