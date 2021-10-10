@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ModeloORMxSQL.Core.Models;
+using ModeloORMxSQL.Core.Repositories;
 using ModeloORMxSQL.Core.Services;
 
 namespace ModeloORMxSQL.Api.Controllers
@@ -12,10 +13,14 @@ namespace ModeloORMxSQL.Api.Controllers
     [Route("orm/clientes")]
     public class ORMController : MainController
     {
+        //TIRAR O REPOSITORIO DA CONTROLLER!
         private readonly ORMService  _ormService;
-        public ORMController(ORMService ormService)
+        private readonly ORMRepository _ormRepository;
+        public ORMController(ORMService ormService,
+                             ORMRepository ormRepository)
         {
             _ormService = ormService;
+            _ormRepository = ormRepository;
         }
 
         /// <summary>
@@ -33,6 +38,17 @@ namespace ModeloORMxSQL.Api.Controllers
             }
 
             return Resposta(true, new { listarClientes });
+        }
+
+        /// <summary>
+        /// Listar todos os estabelecimentos de um cliente
+        /// </summary>
+        [HttpGet]
+        [Route("list-user")]
+        public async Task<ActionResult<List<Cliente>>> ListarClientesTeste()
+        {
+            var establishments = await _ormRepository.ListarClientesCadastrados();
+            return establishments;
         }
     }
 }
