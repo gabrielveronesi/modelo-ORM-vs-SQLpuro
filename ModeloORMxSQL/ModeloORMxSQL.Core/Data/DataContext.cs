@@ -5,7 +5,20 @@ namespace ModeloORMxSQL.Core.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base (options) {}
+        public DataContext()
+        {
+        }
+        public DataContext(DbContextOptions options) : base(options)
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            if (!options.IsConfigured)
+            {
+                options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Teste_ORM_SQL;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            }
+        }
 
         public DbSet<Cliente> Clientes { get; set; }
 
