@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ModeloORMxSQL.Core.Models;
@@ -7,23 +9,23 @@ using ModeloORMxSQL.Core.Services;
 namespace ModeloORMxSQL.Api.Controllers
 {
     [ApiController]
-    [Route("orm/clientes")]
-    public class ORMController : MainController
+    [Route("sql/clientes")]
+    public class SQLController : MainController
     {
         private readonly ClienteService  _clienteService;
-        public ORMController(ClienteService clienteService)
+        public SQLController(ClienteService clienteService)
         {
             _clienteService = clienteService;
         }
 
         /// <summary>
-        /// Listar estabelecimentos com select em ORM
+        /// Listar estabelecimentos com select em SQL Puro
         /// </summary>
         [HttpGet]
-        [Route("listar-clientes-orm")]
-        public async Task<ActionResult<List<Cliente>>> ListarClientesORM()
+        [Route("listar-clientes-sql")]
+        public ActionResult<List<Cliente>> ListarClientesSQL()
         {
-            var listarClientes = await _clienteService.ListarClientesComORM();
+            var listarClientes =  _clienteService.ListarClientesComSQL();
             
             if (listarClientes == null)
             {

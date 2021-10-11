@@ -27,8 +27,8 @@ namespace ModeloORMxSQL.Api
             options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Teste_ORM_SQL;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
 
             //Configurando injeção de dependencia
-            services.AddTransient<ORMRepository, ORMRepository>();
-            services.AddTransient<ORMService, ORMService>();
+            services.AddTransient<ClienteRepository, ClienteRepository>();
+            services.AddTransient<ClienteService, ClienteService>();
             
 
             services.AddControllers();
