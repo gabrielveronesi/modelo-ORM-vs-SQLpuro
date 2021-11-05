@@ -32,7 +32,7 @@ namespace ModeloORMxSQL.Api.Controllers
                 return Resposta(false, "Não foi localizado clientes");
             }
             
-
+        //Gabriel
             return Resposta(true, new { listarClientes });
         }
 
