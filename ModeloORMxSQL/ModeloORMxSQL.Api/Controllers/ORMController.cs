@@ -31,7 +31,7 @@ namespace ModeloORMxSQL.Api.Controllers
             {
                 return Resposta(false, "Não foi localizado clientes");
             }
-            //teste
+            
 
             return Resposta(true, new { listarClientes });
         }
